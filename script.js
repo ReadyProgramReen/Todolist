@@ -1,0 +1,5 @@
+const form = document.getElementById('data-form')
+const lists = document.getElementById('data-lists')
+const input = document.getElementById('input')
+const removeAllbtn = document.getElementById('removeall')
+const todoList = document.querySelectorAll('.todo')
