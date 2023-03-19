@@ -119,3 +119,12 @@ class Ui {
       return todoArray.length > 0 ? removeAllbtn.style.display = 'initial' : removeAllbtn.style.display = 'none'
     }
   }
+
+  //so the stored conent shows on the loaded page 
+window.addEventListener('DOMContentLoaded', () => {
+    Ui.displayData()
+    Ui.removeTodo()
+    Ui.editBtn()
+    Ui.removeAll()
+    Ui.removeBtnDisplay()
+  })
