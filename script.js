@@ -33,3 +33,10 @@ class Storage {
     Storage.addTodoStorage(todoArray)
     // Ui.removeBtnDisplay()
   })
+
+  class Todo {
+    constructor(id, todo) {
+      this.id = id;
+      this.todo = todo;
+    }
+  }
