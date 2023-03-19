@@ -40,3 +40,82 @@ class Storage {
       this.todo = todo;
     }
   }
+
+  //display in the  dom 
+class Ui {
+    static displayData() {
+      let displayData = todoArray.map(item => {
+        return `<div class="todo">
+        
+          <p class='ptag'>${item.todo}
+          </p>
+        <div>  
+      <span class="remove" id=${item.id}>🗑️</span> 
+        <span class="edit" id=${item.id}>🖊️</span> 
+         </div>
+          </div>`
+  
+      })
+      lists.innerHTML = displayData.join('')
+      Ui.removeBtnDisplay()
+    }
+    static clearinput() {
+      input.value = '';
+    }
+    static removeTodo() {
+      lists.addEventListener('click', (e => {
+        if (e.target.classList.contains("remove")) {
+          console.log('Remove it ')
+          e.target.parentElement.parentElement.remove()
+          let btnId = e.target.id;
+          console.log(btnId)
+          Ui.removeArrayTodo(btnId)
+          Ui.removeBtnDisplay()
+  
+        }
+  
+  
+  
+      }))
+    }
+    static removeArrayTodo(id) {
+      todoArray = todoArray.filter(item => item.id != id)
+      Storage.addTodoStorage(todoArray)
+    }
+    static editBtn() {
+      let iconChange = true;
+      lists.addEventListener('click', (e => {
+        if (e.target.classList.contains('edit')) {
+          console.log('edit')
+          let p = e.target.parentNode.parentNode.firstElementChild
+          console.log(p)
+          const btnId = e.target.id
+          if (iconChange) {
+            p.setAttribute('contenteditable', true)
+            p.focus()
+            e.target.textContent = 'save';
+            p.style.color = 'blue';
+          } else {
+            e.target.textContent = '🖊️';
+            p.style.color = 'black';
+            p.removeAttribute('contenteditable')
+            const newArr = todoArray.findIndex(item => item.id === +btnId)
+            todoArray[newArr].todo = p.textContent;
+            Storage.addTodoStorage(todoArray)
+          }
+        }
+        iconChange = !iconChange
+      }))
+    }
+    static removeAll() {
+      removeAllbtn.addEventListener('click', () => {
+        console.log('testing')
+        todoArray.length = 0;
+        localStorage.clear()
+        Ui.displayData()
+      })
+    }
+    static removeBtnDisplay() {
+      return todoArray.length > 0 ? removeAllbtn.style.display = 'initial' : removeAllbtn.style.display = 'none'
+    }
+  }
